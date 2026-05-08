@@ -1,0 +1,147 @@
+{
+  "name": "invoicer-app",
+  "version": "1.0.14",
+  "description": "Desktop application for automated invoice generation using Google Docs templates and Google Drive",
+  "type": "module",
+  "author": {
+    "name": "Alexander Tartmin <alexander@tartmin.name>",
+    "url": "https://github.com/Baskerville42"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Baskerville42/invoicer-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Baskerville42/invoicer-app/issues"
+  },
+  "homepage": "https://github.com/Baskerville42/invoicer-app#readme",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev:renderer": "vite --port 5173 --strictPort",
+    "dev:electron": "npm run build:main && npm run build:preload && wait-on http://localhost:5173 && NODE_ENV=development electron .",
+    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:electron\"",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build:preload": "tsc -p tsconfig.preload.json",
+    "build:renderer": "vite build",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "dist": "npm run build && electron-builder",
+    "start": "electron .",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
+  },
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "react",
+    "invoice",
+    "google-docs",
+    "google-drive",
+    "automation",
+    "typescript"
+  ],
+  "build": {
+    "appId": "com.github.baskerville42.invoicer-app",
+    "productName": "Invoicer App",
+    "directories": {
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      ".env"
+    ],
+    "asar": true,
+    "afterSign": "scripts/notarize.cjs",
+    "mac": {
+      "category": "public.app-category.business",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": true,
+      "icon": "build/icons/mac/icon.icns"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "build/icons/win/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "zip"
+      ],
+      "category": "Office",
+      "icon": "build/icons/png/512x512.png"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Baskerville42",
+      "repo": "invoicer-app"
+    }
+  },
+  "devDependencies": {
+    "@electron/notarize": "^3.1.1",
+    "@eslint/compat": "^2.1.0",
+    "@eslint/js": "^9.39.4",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/electron-json-storage": "^4.5.4",
+    "@types/node": "^25.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "concurrently": "^9.2.1",
+    "electron": "^42.0.0",
+    "electron-builder": "^26.8.1",
+    "electron-icon-builder": "^2.0.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "flyonui": "^2.4.1",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "postcss": "^8.5.14",
+    "prettier": "^3.8.3",
+    "tailwindcss": "^4.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.11",
+    "wait-on": "^9.0.5"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "electron-json-storage": "^4.6.0",
+    "framer-motion": "^12.38.0",
+    "googleapis": "^171.4.0",
+    "lucide-react": "^1.14.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "zustand": "^5.0.13"
+  }
+}

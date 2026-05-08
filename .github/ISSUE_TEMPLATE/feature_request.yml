@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest an idea for this project
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        У вас є ідея, як зробити цей додаток кращим? Ми будемо раді почути її!
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Опис пропозиції
+      description: Чи пов'язана ваша пропозиція з проблемою? Будь ласка, опишіть.
+      placeholder: Я хотів би мати можливість...
+    validations:
+      required: true
+  - type: textarea
+    id: solution-description
+    attributes:
+      label: Опис рішення
+      description: Чіткий та лаконічний опис того, що ви хочете бачити.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Альтернативи
+      description: Опишіть будь-які альтернативні рішення або функції, які ви розглядали.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Додатковий контекст
+      description: Додайте будь-яку іншу інформацію або скріншоти щодо запиту на функцію тут.
